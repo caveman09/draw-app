@@ -2,6 +2,7 @@
   "name": "draw-app",
   "private": true,
   "scripts": {
+    "clean": "rimraf dist packages/*/dist",
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
@@ -9,6 +10,7 @@
   },
   "devDependencies": {
     "prettier": "^3.2.5",
+    "rimraf": "^6.0.1",
     "turbo": "^2.3.3",
     "typescript": "5.5.4"
   },

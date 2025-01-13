@@ -2,17 +2,18 @@
   "name": "http-backend",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run build && npm run start",
     "build": "tsc -b",
-    "start": "node dist/index.js"
+    "start": "node ./dist/index.js"
   },
   "dependencies": {
     "@repo/typescript-config": "workspace:*",
     "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "@repo/backend-common": "workspace:*"
+    "jsonwebtoken": "^9.0.2"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,8 @@
   "description": "",
   "devDependencies": {
     "@types/express": "^5.0.0",
-    "@types/jsonwebtoken": "^9.0.7"
+    "@types/jsonwebtoken": "^9.0.7",
+    "@repo/backend-common": "workspace:*",
+    "@repo/common": "workspace:*"
   }
 }

@@ -1,19 +1,25 @@
 {
   "name": "@repo/backend-common",
   "version": "1.0.0",
+  "description": "",
+  "type": "module",
   "main": "index.js",
   "exports": {
-    "./config": "./src/index.ts"
+    "./config": "./dist/index.js"
   },
+  "config": "./dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf dist"
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22.10.5"
+    "@repo/typescript-config": "workspace:*"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "@types/node": "^22.10.5",
+    "dotenv": "^16.4.7"
+  }
 }

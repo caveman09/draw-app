@@ -1,24 +1,25 @@
 import express from 'express';
-import authMiddleware from "./middleware";
+import { authMiddleware } from './middleware.js';
+import { CreateUserSchema, SigninSchema } from "@repo/common/types";
 
 const app = express();
 const port = 3001;
 
 app.use(express.json());
 
-app.get('/', authMiddleware, (req, res) => {
+app.get('/', authMiddleware, async (req, res) => {
     const token = req.header('authorization');
 });
 
 app.get('/signup', (req, res) => {
-    const { username, password } = req.body;
+    const parsedData = CreateUserSchema.safeParse(req.body);
 });
 
 app.get('/signin', (req, res) => {
     const { username, password } = req.body;
 });
 
-app.get('/room', authMiddleware, (req, res) => {
+app.get('/room', authMiddleware, async (req, res) => {
 
 });
 
