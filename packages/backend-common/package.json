@@ -10,7 +10,8 @@
   "config": "./dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "build": "tsc -b"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*"
