@@ -13,7 +13,8 @@
   "dependencies": {
     "@repo/typescript-config": "workspace:*",
     "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "@repo/db": "workspace:*"
   },
   "keywords": [],
   "author": "",
