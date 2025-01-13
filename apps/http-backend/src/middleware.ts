@@ -2,6 +2,10 @@ import { Request, Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '@repo/backend-common/config';
 
+interface TokenPayload {
+    userId: string;
+}
+
 export function authMiddleware(req: Request, res: Response, next: NextFunction) {
     const token = req.header('authorization') ?? '';
     if (!token) {
@@ -10,8 +14,9 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
 
     const decodedToken = jwt.verify(token, JWT_SECRET);
     if (decodedToken) {
-        // have to fix the type error here
-        //const userId = decodedToken.userId;
+        const userId = decodedToken as TokenPayload;
+        // @ts-ignore
+        req.userId = userId;
         next();
     } else {
         res.status(403).json({ message: 'Unauthorized' });
