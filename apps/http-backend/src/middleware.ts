@@ -14,7 +14,9 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
 
     const decodedToken = jwt.verify(token, JWT_SECRET);
     if (decodedToken) {
-        const userId = decodedToken as TokenPayload;
+        // @ts-ignore
+        const userId = decodedToken.userId;
+        console.log('middleware userid ', userId);
         // @ts-ignore
         req.userId = userId;
         next();
