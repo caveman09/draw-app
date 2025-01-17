@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "exports": {
-    "./types": "./dist/types.js"
+    "./types": "./dist/types.js",
+    "./payloadSchemas": "./dist/schemas.js"
   },
   "types": "dist/types.d.ts",
   "type": "module",
