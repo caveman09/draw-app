@@ -53,6 +53,15 @@ wss.on('connection', (ws: WebSocket, req: Request) => {
         userId
     });
 
+    ws.on('open', async () => {
+        console.log('connection opened | new user ', users.at(users.length - 1)?.userId);
+    });
+
+    ws.on('close', async (code, reason) => {
+        console.log('connection closed | removing user ', users.at(users.length - 1)?.userId);
+        users.filter((value) => value.userId != userId);
+    });
+
     ws.on('message', async (data, isBinary) => {
         const parsedData = JSON.parse(data as unknown as string);
 
