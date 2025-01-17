@@ -32,7 +32,7 @@ export default function Page() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>
+                <CardTitle className="font-semibold">
                     Signin
                 </CardTitle>
                 <CardDescription>
@@ -42,32 +42,26 @@ export default function Page() {
 
             <CardContent>
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
                         <FormField control={form.control} name="username" render={({ field }) => (
                             <FormItem>
-                                <FormLabel>
+                                <FormLabel className="font-medium">
                                     Email
                                 </FormLabel>
                                 <FormControl>
                                     <Input placeholder="johndoe@cavemail.com" {...field} />
                                 </FormControl>
-                                <FormDescription>
-                                    Enter your email.
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )} />
                         <FormField control={form.control} name="password" render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>
+                            <FormItem className="">
+                                <FormLabel className="font-medium">
                                     Password
                                 </FormLabel>
-                                <FormControl>
+                                <FormControl className="">
                                     <Input placeholder="password123" {...field} />
                                 </FormControl>
-                                <FormDescription>
-                                    Enter your password.
-                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )} />
