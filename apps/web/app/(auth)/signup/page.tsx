@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import axios from "axios";
+import { BACKEND_URL } from "@/config";
 
 export default function Page() {
     const [username, setUsername] = useState('');
@@ -40,7 +41,7 @@ export default function Page() {
         };
         try {
 
-            const response = await axios.post('http://localhost:3001/signup', requestBody);
+            const response = await axios.post(`${BACKEND_URL}/signup`, requestBody);
 
         } catch (e) {
             console.log(e);

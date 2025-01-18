@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { BACKEND_URL } from "@/config";
 
 export default function Page() {
     const [username, setUsername] = useState('');
@@ -40,7 +41,7 @@ export default function Page() {
         }
         try {
 
-            const response = await axios.post('http://localhost:3001/signin', requestBody);
+            const response = await axios.post(`${BACKEND_URL}/signin`, requestBody);
             if (response.status === 200) {
                 router.push('/lobby');
             }
