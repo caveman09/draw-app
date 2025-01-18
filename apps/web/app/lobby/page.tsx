@@ -1,17 +1,8 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { columns } from './columns';
-import { DataTable } from "./data-table";
-import { RoomSchema, roomSchema } from "@repo/common/payloadSchemas";
-import axios from "axios";
-import { Button } from "@/components/ui/button";
-
-async function getRooms(): Promise<RoomSchema[]> {
-    const response = await axios.get('http://localhost:3001/rooms');
-    return response.data.rooms;
-}
+import { Suspense } from "react";
+import RoomsComponent from "./rooms";
 
 export default async function Page() {
-    const rooms = await getRooms();
     return (
         <Card className="">
             <CardHeader>
@@ -23,7 +14,9 @@ export default async function Page() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <DataTable columns={columns} data={rooms} />
+                <Suspense fallback={<div>Loading...</div>}>
+                    <RoomsComponent />
+                </Suspense>
             </CardContent>
         </Card>
     );

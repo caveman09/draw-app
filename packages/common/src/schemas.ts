@@ -17,8 +17,8 @@ export const chatSchema = z.object({
 });
 
 export const roomSchema = z.object({
-    roomId: z.number(),
-    roomSlug: z.string(),
+    id: z.number(),
+    slug: z.string(),
     createdAt: z.date(),
     adminId: z.string()
 });
