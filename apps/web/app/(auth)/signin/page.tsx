@@ -17,10 +17,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof SigninSchema>>({
         resolver: zodResolver(SigninSchema),
@@ -39,6 +41,9 @@ export default function Page() {
         try {
 
             const response = await axios.post('http://localhost:3001/signin', requestBody);
+            if (response.status === 200) {
+                router.push('/lobby');
+            }
 
         } catch (e) {
             console.log(e);

@@ -67,7 +67,9 @@ app.post('/signin', async (req, res) => {
         return;
     }
     const token = jwt.sign({ userId: user.id }, JWT_SECRET);
-    res.json({ token });
+    // TODO : improve security here !
+    res.cookie('token', token);
+    res.json({ message: 'Login Succesful!' });
 });
 
 app.post('/room', authMiddleware, async (req, res) => {
@@ -91,6 +93,11 @@ app.post('/room', authMiddleware, async (req, res) => {
     } catch (e) {
         res.status(411).json({ message: 'Room already exists!' });
     }
+});
+
+app.get('/rooms', async (req, res) => {
+    const rooms = await prismaClient.room.findMany();
+    res.json({ rooms });
 });
 
 app.get('/chats/:roomId', async (req, res) => {
