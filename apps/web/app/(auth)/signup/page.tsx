@@ -15,8 +15,14 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import axios from "axios";
 
 export default function Page() {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [displayName, setDisplayName] = useState('');
+
     const form = useForm<z.infer<typeof CreateUserSchema>>({
         resolver: zodResolver(CreateUserSchema),
         defaultValues: {
@@ -26,8 +32,19 @@ export default function Page() {
         }
     });
 
-    function onSubmit(values: z.infer<typeof CreateUserSchema>) {
-        // do something here
+    async function onSubmit(values: z.infer<typeof CreateUserSchema>) {
+        const requestBody = {
+            username: values.username,
+            password: values.password,
+            name: values.name
+        };
+        try {
+
+            const response = await axios.post('http://localhost:3001/signup', requestBody);
+
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return (
@@ -50,7 +67,7 @@ export default function Page() {
                                     Email
                                 </FormLabel>
                                 <FormControl>
-                                    <Input placeholder="johndoe@cavemail.com" {...field} />
+                                    <Input placeholder="johndoe@cavemail.com" {...field} type='email' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -61,7 +78,7 @@ export default function Page() {
                                     Password
                                 </FormLabel>
                                 <FormControl className="">
-                                    <Input placeholder="password123" {...field} />
+                                    <Input placeholder="password123" {...field} type='password' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -72,7 +89,7 @@ export default function Page() {
                                     Display Name
                                 </FormLabel>
                                 <FormControl className="">
-                                    <Input placeholder="JohnDoe" {...field} />
+                                    <Input placeholder="JohnDoe" {...field} type='text' />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
