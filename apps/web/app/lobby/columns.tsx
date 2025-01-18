@@ -4,19 +4,19 @@ import { RoomSchema, roomSchema } from "@repo/common/payloadSchemas";
 
 export const columns: ColumnDef<RoomSchema>[] = [
     {
-        accessorKey: "roomId",
+        accessorKey: 'id',
         header: "Room ID",
     },
     {
-        accessorKey: "roomSlug",
+        accessorKey: 'slug',
         header: "Name",
     },
     {
-        accessorKey: "adminId",
+        accessorKey: 'adminId',
         header: "Owner",
     },
     {
-        accessorKey: "createdAt",
+        accessorKey: 'createdAt',
         header: "Created at",
     }
 ]

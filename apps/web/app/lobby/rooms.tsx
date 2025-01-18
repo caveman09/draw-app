@@ -23,5 +23,7 @@ export default function RoomsComponent() {
         getRooms();
     }, []);
 
+    useEffect(() => { console.log(rooms); }, [rooms])
+
     return (<> {loading ? (<div>Loading...</div>) : (<DataTable columns={columns} data={rooms} />)} </>);
 }
