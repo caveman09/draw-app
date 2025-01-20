@@ -96,11 +96,14 @@ wss.on('connection', (ws: WebSocket, req: Request) => {
 
             const joinData: JoinRoomSchema = joinRoomResult.data;
             const user = users.find((value, index) => ws === value.ws);
-            user?.rooms.push(joinData.roomId);
-            if (user?.userId && joinData.roomId) {
+            if (!user) {
+                return;
+            }
+            user.rooms.push(joinData.roomId);
+            if (user.userId && joinData.roomId) {
                 await prismaClient.roomUser.create({
                     data: {
-                        userId: user?.userId,
+                        userId: user.userId,
                         roomId: joinData.roomId
                     }
                 });
@@ -114,6 +117,16 @@ wss.on('connection', (ws: WebSocket, req: Request) => {
                 return;
             }
             user.rooms = user.rooms.filter((value) => value != leaveData.roomId);
+            if (user.userId && leaveData.roomId) {
+                await prismaClient.roomUser.delete({
+                    where: {
+                        userId_roomId: {
+                            userId: user.userId,
+                            roomId: leaveData.roomId
+                        }
+                    }
+                })
+            }
 
         } else if (chatResult.success) {
 
