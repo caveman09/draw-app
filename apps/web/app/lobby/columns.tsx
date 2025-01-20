@@ -28,7 +28,7 @@ export const columns: ColumnDef<RoomSchema>[] = [
         cell: ({ row }) => (
             <Button onClick={(e) => {
                 joinRoom(row.original.id);
-            }}>
+            }} variant={'outline'}>
                 Join
             </Button>
         ),

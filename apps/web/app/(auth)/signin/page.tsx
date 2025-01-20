@@ -45,7 +45,6 @@ export default function Page() {
             const response = await axios.post(`${BACKEND_URL}/signin`, requestBody, { withCredentials: true });
             if (response.status === 200) {
                 const token = document.cookie.split('; ').find(item => item.startsWith('token='));
-                console.log('COOKIE: ' + document.cookie);
                 connect(token ? token : '');
                 router.push('/lobby');
             }

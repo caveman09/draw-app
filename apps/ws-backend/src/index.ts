@@ -97,6 +97,14 @@ wss.on('connection', (ws: WebSocket, req: Request) => {
             const joinData: JoinRoomSchema = joinRoomResult.data;
             const user = users.find((value, index) => ws === value.ws);
             user?.rooms.push(joinData.roomId);
+            if (user?.userId && joinData.roomId) {
+                await prismaClient.roomUser.create({
+                    data: {
+                        userId: user?.userId,
+                        roomId: joinData.roomId
+                    }
+                });
+            }
 
         } else if (leaveRoomResult.success) {
 
