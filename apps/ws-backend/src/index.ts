@@ -3,9 +3,28 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { JWT_SECRET } from "@repo/backend-common/config";
 import { prismaClient } from "@repo/db/client";
 import { joinRoomSchema, leaveRoomSchema, chatSchema, JoinRoomSchema, LeaveRoomSchema, ChatSchema } from "@repo/common/payloadSchemas";
+import express from "express";
+import cookieParser from "cookie-parser";
+import { createServer } from 'http';
+
+const app = express();
+const server = createServer(app);
+
+app.use(cookieParser());    // might remove this
+app.use((req, res, next) => {
+    const allowedOrigins = ['http://localhost:3000', 'http://192.168.1.40:3000'];
+    const origin = req.headers.origin || '';
+    if (allowedOrigins.includes(origin)) {
+        res.header('Access-Control-Allow-Origin', origin);
+    }
+    res.header('Access-Control-Allow-Methods', 'GET');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
 
 const port = 3002;
-const wss = new WebSocketServer({ port });
+const wss = new WebSocketServer({ server });
 
 interface User {
     ws: WebSocket,
@@ -38,9 +57,13 @@ wss.on('connection', (ws: WebSocket, req: Request) => {
         return;
     }
 
+    console.log('new ws connection');
+
     const queryParam = new URLSearchParams(url.split('?')[1]);
     const token = queryParam.get('token') || "";
     const userId = checkUser(token);
+
+    console.log(userId);
 
     if (!userId) {
         ws.close();
@@ -109,4 +132,5 @@ wss.on('connection', (ws: WebSocket, req: Request) => {
     });
 })
 
+server.listen(port);
 console.log('Websocket server running on port ', port);

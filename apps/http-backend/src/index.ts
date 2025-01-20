@@ -17,6 +17,7 @@ app.use((req, res, next) => {
     }
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
     next();
 });
 
@@ -68,7 +69,9 @@ app.post('/signin', async (req, res) => {
     }
     const token = jwt.sign({ userId: user.id }, JWT_SECRET);
     // TODO : improve security here !
-    res.cookie('token', token);
+    res.cookie('token', token, {
+        httpOnly: false
+    });
     res.json({ message: 'Login Succesful!' });
 });
 
