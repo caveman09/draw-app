@@ -1,7 +1,9 @@
 export default async function Page({ params }: { params: { slug: String } }) {
+    const { slug } = params;
+
     return (
         <div>
-            ROOM {`${params.slug}`}
+            ROOM {`${slug}`}
         </div>
     );
 }

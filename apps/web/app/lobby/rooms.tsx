@@ -25,6 +25,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 
+import { useRouter } from 'next/navigation';
 
 export default function RoomsComponent() {
     const [rooms, setRooms] = useState<RoomSchema[]>([]);
@@ -50,6 +51,8 @@ export default function RoomsComponent() {
 }
 
 export function CreateRoomComponent() {
+    const router = useRouter();
+
     const form = useForm<z.infer<typeof CreateRoomSchema>>({
         resolver: zodResolver(CreateRoomSchema),
         defaultValues: {
@@ -57,8 +60,11 @@ export function CreateRoomComponent() {
         }
     })
 
-    function onSubmit(values: z.infer<typeof CreateRoomSchema>) {
-        createRoom(values.name);
+    async function onSubmit(values: z.infer<typeof CreateRoomSchema>) {
+        const response = await createRoom(values.name);
+        if (response) {
+            router.push(`/room/${response}`);
+        }
     }
 
     return (

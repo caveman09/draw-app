@@ -3,7 +3,6 @@ import { JoinRoomSchema, LeaveRoomSchema, RoomSchema } from "@repo/common/payloa
 import { CreateRoomSchema } from "@repo/common/types";
 import axios from "axios";
 import { z } from 'zod';
-import { useRouter } from "next/navigation";
 
 let socket: WebSocket | null = null;
 
@@ -37,16 +36,16 @@ export function sendMessage(message: string): void {
     }
 }
 
-export async function createRoom(roomSlug: string): Promise<void> {
+export async function createRoom(roomSlug: string): Promise<String | undefined> {
     if (socket && socket.readyState === WebSocket.OPEN) {
         const requestBody: z.infer<typeof CreateRoomSchema> = {
             name: roomSlug
         };
         const response = await axios.post(`${BACKEND_URL}/room`, requestBody, { withCredentials: true });
         if (response.status === 200) {
-
+            return roomSlug;
         } else {
-
+            return undefined;
         }
     }
 }
@@ -59,8 +58,6 @@ export async function joinRoom(roomId: number): Promise<String | undefined> {
         if (response.status === 200) {
             const rooms: RoomSchema[] = response.data.rooms;
             const slug = rooms.find(item => item.id === roomId)?.slug;
-            console.log(response.data);
-            console.log('THE SLUG ', slug);
             return slug;
         } else {
             return undefined;
