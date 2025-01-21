@@ -65,9 +65,19 @@ export async function joinRoom(roomId: number): Promise<String | undefined> {
     }
 }
 
-export function leaveRoom(roomId: number): void {
+export async function leaveRoom(slug: String): Promise<void> {
     if (socket && socket.readyState === WebSocket.OPEN) {
-        const payload: LeaveRoomSchema = { type: 'leave_room', roomId: roomId };
-        socket.send(JSON.stringify(payload));
+        try {
+            const response = await axios.get(`/room/${slug}`);
+            if (response.status != 200) {
+                throw new Error('Invalid slug');
+            }
+            const data: RoomSchema = response.data;
+            const roomId: number = data.id;
+            const payload: LeaveRoomSchema = { type: 'leave_room', roomId: roomId };
+            socket.send(JSON.stringify(payload));
+        } catch (e) {
+            console.error(e);
+        }
     }
 } 
