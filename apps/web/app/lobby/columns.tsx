@@ -1,10 +1,7 @@
 "use client"
 import { ColumnDef } from "@tanstack/react-table";
 import { RoomSchema, roomSchema } from "@repo/common/payloadSchemas";
-import { Button } from "@/components/ui/button";
-import { joinRoom } from "@/websockets/websocketModule";
-import axios from "axios";
-import { WS_token_URL } from "@/config";
+import JoinButton from "./joinButton";
 
 export const columns: ColumnDef<RoomSchema>[] = [
     {
@@ -26,11 +23,7 @@ export const columns: ColumnDef<RoomSchema>[] = [
     {
         id: "join",
         cell: ({ row }) => (
-            <Button onClick={(e) => {
-                joinRoom(row.original.id);
-            }} variant={'outline'}>
-                Join
-            </Button>
+            <JoinButton roomId={row.original.id} />
         ),
         enableSorting: false,
         enableHiding: false,

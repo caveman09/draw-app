@@ -1,8 +1,9 @@
 import { BACKEND_URL, WS_URL } from "@/config";
-import { JoinRoomSchema, LeaveRoomSchema } from "@repo/common/payloadSchemas";
+import { JoinRoomSchema, LeaveRoomSchema, RoomSchema } from "@repo/common/payloadSchemas";
 import { CreateRoomSchema } from "@repo/common/types";
 import axios from "axios";
 import { z } from 'zod';
+import { useRouter } from "next/navigation";
 
 let socket: WebSocket | null = null;
 
@@ -42,14 +43,28 @@ export async function createRoom(roomSlug: string): Promise<void> {
             name: roomSlug
         };
         const response = await axios.post(`${BACKEND_URL}/room`, requestBody, { withCredentials: true });
-        return;
+        if (response.status === 200) {
+
+        } else {
+
+        }
     }
 }
 
-export function joinRoom(roomId: number): void {
+export async function joinRoom(roomId: number): Promise<String | undefined> {
     if (socket && socket.readyState === WebSocket.OPEN) {
         const payload: JoinRoomSchema = { type: 'join_room', roomId: roomId };
         socket.send(JSON.stringify(payload));
+        const response = await axios.get(`${BACKEND_URL}/rooms`);
+        if (response.status === 200) {
+            const rooms: RoomSchema[] = response.data.rooms;
+            const slug = rooms.find(item => item.id === roomId)?.slug;
+            console.log(response.data);
+            console.log('THE SLUG ', slug);
+            return slug;
+        } else {
+            return undefined;
+        }
     }
 }
 
