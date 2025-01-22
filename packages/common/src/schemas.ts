@@ -23,7 +23,15 @@ export const roomSchema = z.object({
     adminId: z.string()
 });
 
+export const chatMessageSchema = z.object({
+    id: z.number(),
+    roomId: z.number(),
+    userId: z.string(),
+    message: z.string()
+});
+
 export type JoinRoomSchema = z.infer<typeof joinRoomSchema>;
 export type LeaveRoomSchema = z.infer<typeof leaveRoomSchema>;
 export type ChatSchema = z.infer<typeof chatSchema>;
 export type RoomSchema = z.infer<typeof roomSchema>;
+export type ChatMessageSchema = z.infer<typeof chatMessageSchema>;
