@@ -6,16 +6,16 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
+    SheetClose
 } from "@/components/ui/sheetWindow"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Card } from "@/components/ui/card";
 
 export default async function Page({ params }: { params: { slug: string } }) {
     const slug = (await params).slug;
     return (
         <div className="text-white p-2">
-            <Sheet>
-                <SheetTrigger className="z-50">
+            <Sheet defaultOpen={false}>
+                <SheetTrigger className="fixed z-50 m-1">
                     <Avatar>
                         <AvatarImage src="https://github.com/shadcn.png" />
                         <AvatarFallback>A</AvatarFallback>

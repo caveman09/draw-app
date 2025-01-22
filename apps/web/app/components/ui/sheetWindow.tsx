@@ -33,7 +33,7 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
-  "fixed z-50 gap-4 bg-background p-6 shadow-lg transition-all ease-in-out data-[state=closed]:duration-500 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out",
+  "fixed z-40 gap-4 bg-background p-6 shadow-lg transition-all ease-in-out data-[state=closed]:duration-500 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out",
   {
     variants: {
       side: {
@@ -62,14 +62,11 @@ const SheetContent = React.forwardRef<
   SheetContentProps
 >(({ side = "right", className, children, ...props }, ref) => {
   const [activated, setActivated] = React.useState(false);
-  const innerRef = React.useRef<HTMLDivElement>(null);
 
   const setRef = (element: HTMLDivElement) => {
     if (element) {
-      console.log('Ref is valid:', element);
       setActivated(true);
     } else {
-      console.log('Ref is invalid:', element);
       setActivated(false);
     }
 
@@ -88,6 +85,7 @@ const SheetContent = React.forwardRef<
       <SheetPrimitive.Content
         ref={setRef}
         className={cn(sheetVariants(activated ? { side: "activated" } : { side }), className)}
+        onPointerDownOutside={(ev) => { ev.preventDefault(); }}
         {...props}
       >
         <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
