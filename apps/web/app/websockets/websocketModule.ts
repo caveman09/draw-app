@@ -1,10 +1,20 @@
 import { BACKEND_URL, WS_URL } from "@/config";
-import { JoinRoomSchema, LeaveRoomSchema, RoomSchema } from "@repo/common/payloadSchemas";
+import { ChatSchema, JoinRoomSchema, LeaveRoomSchema, RoomSchema } from "@repo/common/payloadSchemas";
 import { CreateRoomSchema } from "@repo/common/types";
 import axios from "axios";
 import { z } from 'zod';
 
 let socket: WebSocket | null = null;
+
+let messageCallbacks: Array<(data: any) => void> = [];
+
+export function addMessageCallback(callback: (data: any) => void): void {
+    messageCallbacks.push(callback);
+}
+
+export function removeMessageCallback(callback: (data: any) => void): void {
+    messageCallbacks = messageCallbacks.filter(value => value != callback);
+}
 
 export function connect(token: string): void {
     if (!socket) {
@@ -15,7 +25,8 @@ export function connect(token: string): void {
         };
 
         socket.onmessage = (event) => {
-
+            const data = event.data;
+            messageCallbacks.forEach(callback => callback(data));
         };
 
         socket.onerror = (event) => {
@@ -80,4 +91,17 @@ export async function leaveRoom(slug: String): Promise<void> {
             console.error(e);
         }
     }
-} 
+}
+
+export function sendChatMessage(message: string, roomId: number): void {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        try {
+            const payload: ChatSchema = {
+                type: 'chat', message, roomId
+            }
+            socket.send(JSON.stringify(payload));
+        } catch (e) {
+            console.error(e);
+        }
+    }
+}

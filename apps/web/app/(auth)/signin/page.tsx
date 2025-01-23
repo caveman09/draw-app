@@ -47,8 +47,7 @@ export default function Page() {
                 const token = document.cookie.split('; ').find(item => item.startsWith('token='));
                 connect(token ? token : '');
                 router.push('/lobby');
-            }
-
+            } 
         } catch (e) {
             console.log(e);
         }

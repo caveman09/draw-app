@@ -11,28 +11,50 @@ import {
 } from "@/components/ui/sheetWindow"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { BACKEND_URL } from "@/config";
-import { RoomSchema } from "@repo/common/payloadSchemas";
+import { RoomSchema, ChatMessageSchema } from "@repo/common/payloadSchemas";
+import ChatMessage from "./chatmessage";
+import { addMessageCallback, removeMessageCallback, sendChatMessage } from "@/websockets/websocketModule";
 
 export default function ChatRoom({ slug }: { slug: string }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [chats, setChats] = useState<ChatMessageSchema[]>([]);
+    const roomId = useRef(0);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const getChats = async () => {
             let response = await axios.get(`${BACKEND_URL}/rooms`);
-            const rooms: RoomSchema[] = response.data;
-
-            const roomId = rooms.find((room) => room.slug === slug)?.id || -1;
-            if (roomId > -1) {
-                response = await axios.get(`${BACKEND_URL}/chats/${roomId}`);
-                //const chats: ChatSchema[] = response.data;
+            const rooms: RoomSchema[] = response.data.rooms;
+            console.log(rooms);
+            if (!Array.isArray(rooms)) {
+                throw new Error('Expected rooms to be an array');
+            }
+            let currentRoom: RoomSchema | undefined = undefined;
+            currentRoom = rooms.find((room) => room.slug === slug);
+            if (!currentRoom) {
+                return;
+            }
+            roomId.current = currentRoom.id;
+            if (roomId.current > -1) {
+                response = await axios.get(`${BACKEND_URL}/chats/${roomId.current}`);
+                const chatData: ChatMessageSchema[] = response.data.chats;
+                setChats(chatData);
             }
         };
         getChats();
+        const chatNewMessage = (message: ChatMessageSchema) => {
+            setChats([...chats, message]);
+        };
+        addMessageCallback(chatNewMessage);
+
+        return () => {
+            removeMessageCallback(chatNewMessage);
+        };
     }, [])
 
     return (
@@ -59,14 +81,16 @@ export default function ChatRoom({ slug }: { slug: string }) {
 
                 {isOpen &&
                     <ScrollArea className=" flex-grow">
-                        Chats come here
+                        {chats.map((chat) => {
+                            return (<ChatMessage message="" />);
+                        })}
                     </ScrollArea>}
 
                 {isOpen &&
                     <SheetFooter className="text-gray-300">
                         <div className="flex w-full max-w-sm items-center space-x-2">
-                            <Input type='text' placeholder="Message" />
-                            <Button type='submit'>Send</Button>
+                            <Input type='text' placeholder="Message" ref={inputRef} />
+                            <Button type='submit' onClick={() => { sendChatMessage(inputRef.current?.value || '', roomId.current) }}>Send</Button>
                         </div>
                     </SheetFooter>}
 
