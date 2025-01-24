@@ -48,12 +48,15 @@ export default function ChatRoom({ slug }: { slug: string }) {
         };
         getChats();
         const chatNewMessage = (message: ChatMessageSchema) => {
-            setChats([...chats, message]);
+            setChats((prevChats) => [...prevChats, message]);
+            console.log(message);
         };
         addMessageCallback(chatNewMessage);
+        console.log('added message callback');
 
         return () => {
             removeMessageCallback(chatNewMessage);
+            console.log('removed message callback');
         };
     }, [])
 
@@ -80,9 +83,9 @@ export default function ChatRoom({ slug }: { slug: string }) {
                     </SheetHeader>}
 
                 {isOpen &&
-                    <ScrollArea className=" flex-grow">
-                        {chats.map((chat) => {
-                            return (<ChatMessage message="" />);
+                    <ScrollArea className="flex-grow">
+                        {chats.map((chat, index) => {
+                            return (<ChatMessage key={index} message={chat.message} />);
                         })}
                     </ScrollArea>}
 

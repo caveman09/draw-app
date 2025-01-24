@@ -25,7 +25,8 @@ export function connect(token: string): void {
         };
 
         socket.onmessage = (event) => {
-            const data = event.data;
+            const data = JSON.parse(event.data);
+            console.log(data);
             messageCallbacks.forEach(callback => callback(data));
         };
 

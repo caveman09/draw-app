@@ -2,7 +2,7 @@ import { WebSocket, WebSocketServer } from "ws";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { JWT_SECRET } from "@repo/backend-common/config";
 import { prismaClient } from "@repo/db/client";
-import { joinRoomSchema, leaveRoomSchema, chatSchema, JoinRoomSchema, LeaveRoomSchema, ChatSchema } from "@repo/common/payloadSchemas";
+import { joinRoomSchema, leaveRoomSchema, chatSchema, JoinRoomSchema, LeaveRoomSchema, ChatSchema, ChatMessageSchema, chatMessageSchema } from "@repo/common/payloadSchemas";
 import express from "express";
 import cookieParser from "cookie-parser";
 import { createServer } from 'http';
@@ -117,6 +117,8 @@ wss.on('connection', (ws: WebSocket, req: Request) => {
                         }
                     });
                 }
+            } else {
+                user.rooms.push(joinData.roomId);
             }
 
         } else if (leaveRoomResult.success) {
@@ -141,7 +143,7 @@ wss.on('connection', (ws: WebSocket, req: Request) => {
         } else if (chatResult.success) {
 
             const chatData: ChatSchema = chatResult.data;
-            await prismaClient.chat.create({
+            const messageData = await prismaClient.chat.create({
                 data: {
                     message: chatData.message,
                     roomId: chatData.roomId,
@@ -151,12 +153,9 @@ wss.on('connection', (ws: WebSocket, req: Request) => {
 
             users.forEach((value, index) => {
                 if (value.rooms.includes(chatData.roomId)) {
-                    value.ws.send(JSON.stringify({
-                        type: "chat",
-                        message: chatData.message,
-                        roomId: chatData.roomId
-                    }))
+                    value.ws.send(JSON.stringify(messageData))
                 }
+                console.log(value.userId);
             });
 
         }
