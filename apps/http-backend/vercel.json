@@ -3,5 +3,11 @@
         "env": {
             "NODE_PATH": "./node_modules:../../packages"
         }
-    }
+    },
+    "routes": [
+        {
+          "src": "/(.*)",
+          "dest": "dist/index.js"
+        }
+      ]
 }
