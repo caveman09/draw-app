@@ -1,0 +1,9 @@
+{
+    "build": {
+        "env": {
+            "NODE_PATH": "./node_modules:../../packages"
+        },
+        "installCommand": "cd ../../ && pnpm install",
+        "buildCommand": "cd ../../ && pnpm build"
+    }
+}
