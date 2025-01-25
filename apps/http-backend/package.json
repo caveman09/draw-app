@@ -4,6 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "prebuild": "cd ../../ && pnpm install && pnpm build",
     "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run build && npm run start",
