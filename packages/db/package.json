@@ -9,7 +9,7 @@
   "client": "./dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && prisma generate",
+    "build": "prisma generate && tsc -b",
     "migrate": "prisma migrate dev"
   },
   "devDependencies": {
