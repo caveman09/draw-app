@@ -3,7 +3,6 @@
     "env": {
       "NODE_PATH": "./node_modules:../../packages"
     },
-    "src": "dist/index.js",
     "use": "@vercel/node"
   },
   "routes": [
