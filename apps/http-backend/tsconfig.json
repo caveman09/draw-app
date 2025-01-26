@@ -5,14 +5,14 @@
         "rootDir": "./src",
         "outDir": "./dist",
         "paths": {
-            "@repo/backend-common/config": [
-                "../../packages/backend-common"
+            "@repo/backend-common/*": [
+                "packages/backend-common/src/*"
             ],
-            "@repo/common/types": [
-                "../../packages/common"
+            "@repo/common/*": [
+                "packages/common/src/*"
             ],
-            "@repo/db/client": [
-                "../../packages/db"
+            "@repo/db/*": [
+                "packages/db/src/*"
             ]
         }
     }
