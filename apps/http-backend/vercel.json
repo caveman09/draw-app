@@ -2,8 +2,7 @@
   "build": {
     "env": {
       "NODE_PATH": "./node_modules:../../packages"
-    },
-    "use": "@vercel/node"
+    }
   },
   "routes": [
     {
