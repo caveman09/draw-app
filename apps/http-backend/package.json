@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "setup": "cd ../../ && pnpm install && pnpm turbo build",
+    "setup": "cd ../../ && pnpm install && pnpm turbo build && cd apps/http-backend && pnpm install",
     "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run build && npm run start",
