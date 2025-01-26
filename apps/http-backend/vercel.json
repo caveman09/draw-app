@@ -4,10 +4,16 @@
       "NODE_PATH": "./node_modules:../../packages"
     }
   },
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "dist/index.js"
+      "dest": "/index.js"
     }
   ]
 }
