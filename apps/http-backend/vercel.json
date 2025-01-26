@@ -1,13 +1,15 @@
 {
-    "build": {
-        "env": {
-            "NODE_PATH": "./node_modules:../../packages"
-        }
+  "build": {
+    "env": {
+      "NODE_PATH": "./node_modules:../../packages"
     },
-    "routes": [
-        {
-          "src": "/(.*)",
-          "dest": "dist/index.js"
-        }
-      ]
+    "src": "dist/index.js",
+    "use": "@vercel/node"
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/index.js"
+    }
+  ]
 }
