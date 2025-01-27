@@ -1,11 +1,13 @@
 # Multiuser Collaboration App
 
-## Using this example
+## Multiuser drawing application with rooms and chat functionality
 
-Run the following command:
+Run the following commands to setup locally:
 
 ```sh
-npx create-turbo@latest
+pnpm install
+pnpm turbo build
+pnpm run dev
 ```
 
 ## What's inside?
@@ -14,8 +16,9 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
+- `http-backend`: Node backend to handle HTTP requests
+- `ws-backend`: Websocket backend for realtime chat
+- `web`: NextJS Frontend
 - `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
 - `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
