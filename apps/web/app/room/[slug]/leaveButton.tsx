@@ -6,7 +6,7 @@ import { leaveRoom } from "@/websockets/websocketModule";
 export default function LeaveButton({ slug }: { slug: string }) {
     const router = useRouter();
     return (
-        <Button className="text-black" variant={'outline'} onClick={async (e) => {
+        <Button className="text-black" variant={'destructive'} onClick={async (e) => {
             await leaveRoom(slug);
             router.push('/lobby');
         }}>

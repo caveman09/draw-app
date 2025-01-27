@@ -66,17 +66,17 @@ export default function ChatRoom({ slug }: { slug: string }) {
                 setIsOpen(open)
             }
         }>
-            <SheetTrigger className="fixed z-50 m-1">
-                <Avatar>
+            <SheetTrigger className={`fixed z-50 m-1 border-2 rounded-full`}>
+                <Avatar className="w-[70px] h-[70px]">
                     <AvatarImage src="https://github.com/shadcn.png" />
                     <AvatarFallback>A</AvatarFallback>
                 </Avatar>
             </SheetTrigger>
-            <SheetContent side={'topleft'} className={`rounded-lg flex flex-col h-full ${isOpen && `pt-[50px] border`} bg-gray-950`}>
+            <SheetContent side={'topleft'} className={`rounded-3xl flex flex-col h-full ${isOpen && `pt-[40px] border`} bg-gray-950`}>
 
                 {isOpen &&
                     <SheetHeader>
-                        <SheetTitle className="text-gray-300 data-[state=closed]:collapse data-[state=open]:visible">Chat Room</SheetTitle>
+                        <SheetTitle className="text-gray-300 data-[state=closed]:collapse data-[state=open]:visible ml-20">Chat Room</SheetTitle>
                         <SheetDescription>
                             All chats for this room are shown here.
                         </SheetDescription>
