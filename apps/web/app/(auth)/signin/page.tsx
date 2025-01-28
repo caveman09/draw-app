@@ -47,7 +47,7 @@ export default function Page() {
                 const token = document.cookie.split('; ').find(item => item.startsWith('token='));
                 connect(token ? token : '');
                 router.push('/lobby');
-            } 
+            }
         } catch (e) {
             console.log(e);
         }
@@ -55,12 +55,12 @@ export default function Page() {
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="">
                 <CardTitle className="font-semibold">
-                    Signin
+                    signin
                 </CardTitle>
                 <CardDescription>
-                    Login to an existing account.
+                    login to an existing account.
                 </CardDescription>
             </CardHeader>
 
