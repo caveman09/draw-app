@@ -52,10 +52,10 @@ export default function Page() {
         <Card>
             <CardHeader>
                 <CardTitle className="font-semibold">
-                    SignUp
+                    signup
                 </CardTitle>
                 <CardDescription>
-                    Create a free account.
+                    create a free account.
                 </CardDescription>
             </CardHeader>
 
@@ -65,7 +65,7 @@ export default function Page() {
                         <FormField control={form.control} name="username" render={({ field }) => (
                             <FormItem>
                                 <FormLabel className="font-medium">
-                                    Email
+                                    email
                                 </FormLabel>
                                 <FormControl>
                                     <Input placeholder="johndoe@cavemail.com" {...field} type='email' />
@@ -76,7 +76,7 @@ export default function Page() {
                         <FormField control={form.control} name="password" render={({ field }) => (
                             <FormItem className="">
                                 <FormLabel className="font-medium">
-                                    Password
+                                    password
                                 </FormLabel>
                                 <FormControl className="">
                                     <Input placeholder="password123" {...field} type='password' />
@@ -87,7 +87,7 @@ export default function Page() {
                         <FormField control={form.control} name="name" render={({ field }) => (
                             <FormItem className="">
                                 <FormLabel className="font-medium">
-                                    Display Name
+                                    display name
                                 </FormLabel>
                                 <FormControl className="">
                                     <Input placeholder="JohnDoe" {...field} type='text' />
@@ -95,7 +95,7 @@ export default function Page() {
                                 <FormMessage />
                             </FormItem>
                         )} />
-                        <Button type="submit">Create Account</Button>
+                        <Button type="submit" variant={'outline'}>create account</Button>
                     </form>
                 </Form>
             </CardContent>

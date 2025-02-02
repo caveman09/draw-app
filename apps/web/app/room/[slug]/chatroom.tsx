@@ -65,8 +65,8 @@ export default function ChatRoom({ slug }: { slug: string }) {
             (open) => {
                 setIsOpen(open)
             }
-        }>
-            <SheetTrigger className={`fixed z-50 m-1 border-2 rounded-full`}>
+        } modal={false}>
+            <SheetTrigger className={`fixed z-50 m-1 border-2 rounded-full`} onClick={(e) => { console.log('clicked') }}>
                 <Avatar className="w-[70px] h-[70px]">
                     <AvatarImage src="https://github.com/shadcn.png" />
                     <AvatarFallback>A</AvatarFallback>
