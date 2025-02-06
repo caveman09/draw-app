@@ -1,9 +1,10 @@
 import { Sidebar, SidebarHeader, SidebarGroup, SidebarContent, SidebarFooter } from "@/components/ui/sidebar";
+import "@/globals.css";
 
 export default function RoomSidebar() {
     return (
-        <Sidebar className="ml-16">
-            <SidebarHeader className="bg-neutral-700">
+        <Sidebar className="ml-16 room-sidebar">
+            <SidebarHeader>
                 Room Sidebar
             </SidebarHeader>
             <SidebarGroup>

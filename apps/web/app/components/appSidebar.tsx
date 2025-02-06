@@ -4,7 +4,7 @@ import "@/globals.css";
 
 export function AppSidebar() {
     return (
-        <Sidebar variant="inset" className="px-0">
+        <Sidebar variant="inset" className="px-0 dark py-0">
             <SidebarHeader className="mx-auto">
                 <Avatar className="rounded-full size-12">
                     <AvatarImage src="https://github.com/shadcn.png" className="" />

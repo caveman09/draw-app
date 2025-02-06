@@ -31,7 +31,7 @@ export default function RootLayout({
             "--sidebar-width": "4rem"
           }}>
             <AppSidebar />
-            <main className="flex grow">
+            <main className="flex-grow">
               {children}
             </main>
           </SidebarProvider>
