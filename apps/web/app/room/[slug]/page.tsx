@@ -8,9 +8,9 @@ const Page = () => {
     const { slug } = useParams();
 
     return (
-        <div className="text-white p-2 flex-grow bg-zinc-800 flex">
+        <div className="text-white flex-grow bg-zinc-800 flex">
             <RoomSidebar />
-            <div className="flex-grow">
+            <div className="flex-grow p-2">
                 <ChatRoom slug={typeof slug === 'string' ? slug : ''} />
                 <div className="flex justify-between pl-20">
                     ROOM {`${slug}`}

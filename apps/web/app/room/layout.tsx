@@ -3,7 +3,9 @@ import { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
     return (
-        <SidebarProvider>
+        <SidebarProvider style={{
+            "--sidebar-width": "14rem"
+        }}>
             <main className="flex grow">
                 {children}
             </main>
