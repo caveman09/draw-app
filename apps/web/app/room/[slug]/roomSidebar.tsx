@@ -1,14 +1,22 @@
-import { Sidebar, SidebarHeader, SidebarGroup, SidebarContent, SidebarFooter } from "@/components/ui/sidebar";
+import {
+    Sidebar, SidebarHeader, SidebarGroup, SidebarContent, SidebarFooter
+    , SidebarMenu, SidebarMenuItem
+} from "@/components/ui/sidebar";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import "@/globals.css";
 
 export default function RoomSidebar() {
     return (
         <Sidebar className="ml-16 room-sidebar">
-            <SidebarHeader>
-                Room Sidebar
+            <SidebarHeader className="">
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        Menu Item
+                    </SidebarMenuItem>
+                </SidebarMenu>
             </SidebarHeader>
             <SidebarGroup>
-
             </SidebarGroup>
 
             <SidebarContent>
@@ -16,7 +24,7 @@ export default function RoomSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                Footer
+                User Info & Settings
             </SidebarFooter>
         </Sidebar>
     );
