@@ -1,0 +1,13 @@
+@keyframes smoothBorder {
+    0% {
+        border-radius: 0%;
+    }
+
+    100% {
+        border-radius: 100%;
+    }
+}
+
+.smooth-transition {
+    animation: smoothBorder 0.4s ease-in-out forwards;
+}
