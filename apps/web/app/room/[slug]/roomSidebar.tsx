@@ -6,7 +6,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuContent } from "@/components/ui/dropdown-menu";
-import { ChevronDown, ChevronUp, HeadphonesIcon, MessageSquareMoreIcon, MicIcon, Settings } from "lucide-react";
+import { ChevronDown, ChevronUp, Hash, HeadphonesIcon, MessageSquareMoreIcon, MicIcon, Settings } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
@@ -22,18 +22,18 @@ console.log(tags);
 export default function RoomSidebar() {
     return (
         <Sidebar className="ml-16 room-sidebar">
-            <SidebarHeader className="px-0 pt-[2.5px]">
+            <SidebarHeader className="px-0 pt-[2.5px] pb-0">
                 <SidebarMenu>
                     <SidebarMenuItem className="font-medium">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <SidebarMenuButton variant={"default"} className="py-[25px] pl-4 rounded-none">
                                     cave
-                                    <ChevronDown className="ml-auto" />
+                                    <ChevronDown className="ml-auto mr-2" />
                                 </SidebarMenuButton>
                             </DropdownMenuTrigger>
                             <Separator orientation="horizontal" className="h-[1px] bg-zinc-900" />
-                            <DropdownMenuContent className="w-[250px] bg-zinc-900 font-medium">
+                            <DropdownMenuContent className="w-[200px] bg-zinc-900 font-medium">
                                 <DropdownMenuItem className="text-[0.800rem]">
                                     Invite People
                                 </DropdownMenuItem>
@@ -50,16 +50,16 @@ export default function RoomSidebar() {
             </SidebarHeader>
 
 
-            <SidebarContent className="">
+            <SidebarContent className="m-0 p-0">
                 <ScrollArea className="h-full">
                     <div className="px-2">
                         <ToggleGroup type="single" className="flex flex-col" defaultValue={tags[1]}>
                             <>
                                 {tags.map((tag, index) => (
-                                    <ToggleGroupItem value={tag} key={index} className="text-sm p-1 mr-2 text-gray-400 hover:bg-zinc-700 hover:text-gray-300 rounded-sm">
+                                    <ToggleGroupItem value={tag} key={index} className="text-sm p-1 mr-2 text-gray-400 hover:bg-[#323238] hover:text-gray-300 rounded-sm data-[state=on]:text-white data-[state=on]:bg-zinc-700">
                                         <div className="flex [&_svg]:size-[15px] px-1">
-                                            <MessageSquareMoreIcon className="my-auto" />
-                                            <div className="px-3 font-medium text-[14px]">
+                                            <Hash className="my-auto" />
+                                            <div className="px-2 font-medium text-[14px]">
                                                 {tag}
                                             </div>
                                         </div>
