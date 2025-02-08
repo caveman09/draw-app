@@ -6,15 +6,18 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuContent } from "@/components/ui/dropdown-menu";
-import { ChevronDown, ChevronUp, HeadphonesIcon, MicIcon, Settings } from "lucide-react";
+import { ChevronDown, ChevronUp, HeadphonesIcon, MessageSquareMoreIcon, MicIcon, Settings } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Toggle } from "@/components/ui/toggle";
+import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
 
 import "@/globals.css";
 
 const tags = Array.from({ length: 50 }).map(
     (_, i, a) => `v1.2.0-beta.${a.length - i}`
 )
+
+console.log(tags);
 
 export default function RoomSidebar() {
     return (
@@ -49,14 +52,21 @@ export default function RoomSidebar() {
 
             <SidebarContent className="">
                 <ScrollArea className="h-full">
-                    <div className="p-4">
-                        {tags.map((tag) => (
+                    <div className="px-2">
+                        <ToggleGroup type="single" className="flex flex-col" defaultValue={tags[1]}>
                             <>
-                                <div key={tag} className="text-sm">
-                                    {tag}
-                                </div>
+                                {tags.map((tag, index) => (
+                                    <ToggleGroupItem value={tag} key={index} className="text-sm p-1 mr-2 text-gray-400 hover:bg-zinc-700 hover:text-gray-300 rounded-sm">
+                                        <div className="flex [&_svg]:size-[15px] px-1">
+                                            <MessageSquareMoreIcon className="my-auto" />
+                                            <div className="px-3 font-medium text-[14px]">
+                                                {tag}
+                                            </div>
+                                        </div>
+                                    </ToggleGroupItem>
+                                ))}
                             </>
-                        ))}
+                        </ToggleGroup>
                     </div>
                 </ScrollArea>
             </SidebarContent>
