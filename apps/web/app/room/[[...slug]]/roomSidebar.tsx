@@ -25,7 +25,7 @@ console.log(tags);
 export default function RoomSidebar() {
     return (
         <Sidebar className="ml-16 room-sidebar">
-            <SidebarHeader className="px-0 pt-[2.5px] pb-0">
+            <SidebarHeader className="px-0 pt-[2.5px] pb-0 shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
                 <SidebarMenu>
                     <SidebarMenuItem className="font-medium">
                         <DropdownMenu>
