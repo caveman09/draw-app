@@ -19,6 +19,7 @@ import { BACKEND_URL } from "@/config";
 import { RoomSchema, ChatMessageSchema } from "@repo/common/payloadSchemas";
 import ChatMessage from "./chatmessage";
 import { addMessageCallback, removeMessageCallback, sendChatMessage } from "@/websockets/websocketModule";
+import "../roomStyles.css";
 
 export default function ChatRoom({ slug }: { slug: string }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -66,13 +67,13 @@ export default function ChatRoom({ slug }: { slug: string }) {
                 setIsOpen(open)
             }
         } modal={false}>
-            <SheetTrigger className={`fixed z-50 m-1 border-2 rounded-full`} onClick={(e) => { console.log('clicked') }}>
-                <Avatar className="w-[70px] h-[70px]">
-                    <AvatarImage src="https://github.com/shadcn.png" />
+            <SheetTrigger className={`fixed z-50 m-1 p-1`} onClick={(e) => { }}>
+                <Avatar className="w-[70px] h-[70px] rounded-full border-0 scale-100 hover:scale-105 transition-all duration-500 ease-in-out">
+                    <AvatarImage src="https://github.com/shadcn.png" className="" />
                     <AvatarFallback>A</AvatarFallback>
                 </Avatar>
             </SheetTrigger>
-            <SheetContent side={'topleft'} className={`rounded-3xl flex flex-col h-full ${isOpen && `pt-[40px] border`} bg-gray-950`}>
+            <SheetContent side={'topleft'} className={`rounded-md rounded-tl-3xl flex flex-col h-full ${isOpen && `pt-[40px] border`} bg-gray-950`}>
 
                 {isOpen &&
                     <SheetHeader>
