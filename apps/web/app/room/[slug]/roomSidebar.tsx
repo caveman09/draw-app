@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Sidebar, SidebarHeader, SidebarGroup, SidebarContent, SidebarFooter
     , SidebarMenu, SidebarMenuItem,
@@ -10,6 +12,7 @@ import { ChevronDown, ChevronUp, Hash, HeadphonesIcon, MessageSquareMoreIcon, Mi
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
+import { Channel } from "@/components/channel/Channel";
 
 import "@/globals.css";
 
@@ -54,18 +57,16 @@ export default function RoomSidebar() {
                 <ScrollArea className="h-full">
                     <div className="px-2">
                         <ToggleGroup type="single" className="flex flex-col" defaultValue={tags[1]}>
-                            <>
-                                {tags.map((tag, index) => (
-                                    <ToggleGroupItem value={tag} key={index} className="text-sm p-1 mr-2 text-gray-400 hover:bg-[#323238] hover:text-gray-300 rounded-sm data-[state=on]:text-white data-[state=on]:bg-zinc-700">
-                                        <div className="flex [&_svg]:size-[15px] px-1">
-                                            <Hash className="my-auto" />
-                                            <div className="px-2 font-medium text-[14px]">
-                                                {tag}
-                                            </div>
-                                        </div>
-                                    </ToggleGroupItem>
-                                ))}
-                            </>
+                            {tags.map((tag, index) => (
+                                <Channel
+                                    key={index}
+                                    id={tag}
+                                    name={tag}
+                                    onClick={() => {
+                                        console.log(`Selected channel: ${tag}`);
+                                    }}
+                                />
+                            ))}
                         </ToggleGroup>
                     </div>
                 </ScrollArea>
