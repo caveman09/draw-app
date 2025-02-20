@@ -1,18 +1,14 @@
 "use client"
-import LeaveButton from "./leaveButton";
-import { useParams, useRouter } from "next/navigation";
+import { memo, useRef, useEffect, useState } from 'react';
+import { useParams } from "next/navigation";
 import RoomSidebar from "./roomSidebar";
-import { NavigationMenu, NavigationMenuList } from "@/components/ui/navigation-menu";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs } from "@/components/ui/tabs";
+import Header from './components/header/Header';
 
-export default function RoomLayout({ children }: { children: React.ReactNode }) {
-    const params = useParams();
-    const segments = params.slug as string[];
-    const [roomSlug, channelId] = segments || [];
-    const router = useRouter();
+const RoomLayout = memo(function ({ children }: { children: React.ReactNode }) {
 
     const handleTabChange = (value: string) => {
-
+        // Tab change logic here
     };
 
     return (
@@ -24,23 +20,14 @@ export default function RoomLayout({ children }: { children: React.ReactNode }) 
                 onValueChange={handleTabChange}
             >
                 <div className="w-full h-full">
-                    <NavigationMenu className="w-full max-w-full px-6 h-[53.5px] justify-between bg-[#303035] border-b border-zinc-900 shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
-                        <span className="text-[0.800rem] font-semibold min-w-[100px] flex">
-                            {channelId ? `#${channelId} in ${roomSlug}` : `ROOM ${roomSlug}`}
-                        </span>
-                        <NavigationMenuList className="w-full max-w-full">
-                            <TabsList className="bg-transparent w-full justify-center">
-                                <TabsTrigger className="text-[0.800rem]" value="chat">Chat</TabsTrigger>
-                                <TabsTrigger className="text-[0.800rem]" value="canvas">Canvas</TabsTrigger>
-                                <TabsTrigger className="text-[0.800rem]" value="files">Files</TabsTrigger>
-                                <TabsTrigger className="text-[0.800rem]" value="history">History</TabsTrigger>
-                            </TabsList>
-                            <LeaveButton slug={roomSlug || ''} />
-                        </NavigationMenuList>
-                    </NavigationMenu>
+                    <Header
+                        onTabChange={handleTabChange}
+                    />
                     {children}
                 </div>
             </Tabs>
-        </div >
+        </div>
     );
-}
+});
+
+export default RoomLayout;

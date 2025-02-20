@@ -5,11 +5,21 @@ import CanvasPage from "./components/canvas/Canvas"
 import FilesPage from "./components/files/Files"
 import HistoryPage from "./components/history/History"
 import { TabsContent } from "@/components/ui/tabs"
+import { memo, useEffect } from "react"
+import { useRoomStore } from "./store/store"
 
-export default function Page() {
+const Page = function () {
     const params = useParams();
-    const segments = params.slug as string[];
-    const [roomSlug, channelId, component = 'chat'] = segments || [];
+    const segments = (params?.slug as string[]) || [];
+    const roomId = segments[0] || ''; // First segment is room ID
+    const setCurrentRoom = useRoomStore((state) => state.setCurrentRoom);
+
+    useEffect(() => {
+        // Set room ID in Recoil state when component mounts or URL changes
+        if (roomId) {
+            setCurrentRoom(roomId);
+        }
+    }, [roomId]);
 
     return (
         <>
@@ -39,3 +49,5 @@ export default function Page() {
         </>
     );
 }
+
+export default memo(Page);

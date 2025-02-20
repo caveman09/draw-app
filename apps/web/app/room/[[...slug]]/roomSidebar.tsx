@@ -1,5 +1,5 @@
 "use client"
-
+import { memo, useEffect, useState, useMemo, Suspense } from 'react';
 import {
     Sidebar, SidebarHeader, SidebarGroup, SidebarContent, SidebarFooter
     , SidebarMenu, SidebarMenuItem,
@@ -11,18 +11,34 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuConten
 import { ChevronDown, ChevronUp, Hash, HeadphonesIcon, MessageSquareMoreIcon, MicIcon, Settings } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Toggle } from "@/components/ui/toggle";
-import { ToggleGroup, ToggleGroupItem } from "@radix-ui/react-toggle-group";
-import { Channel } from "@/components/channel/Channel";
-
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import Channel from "@/room/[[...slug]]/components/channel/Channel";
+import { useRoomStore } from "@/room/[[...slug]]/store/store";
 import "@/globals.css";
 
 const tags = Array.from({ length: 50 }).map(
     (_, i, a) => `v1.2.0-beta.${a.length - i}`
-)
+);
 
-console.log(tags);
+const RoomSidebarContent = memo(function RoomSidebarContent() {
+    const [channels] = useState<string[]>(tags);
+    const roomSlug: string = useRoomStore((state) => state.currentRoom);
 
-export default function RoomSidebar() {
+    const channelProps = useMemo(() => {    // temporary
+        console.log('channel props made');
+        return channels.map((channel, index) => ({
+            id: channel,
+            name: channel
+        }));
+    }, [channels, roomSlug]);
+
+    const memoizedChannels = useMemo(() => {    // temporary
+        console.log('memoizedChannels');
+        return channelProps.map((props, index) => (
+            <Channel key={index} {...props} />
+        ));
+    }, [channelProps]);
+
     return (
         <Sidebar className="ml-16 room-sidebar">
             <SidebarHeader className="px-0 pt-[2.5px] pb-0 shadow-[0_2px_4px_rgba(0,0,0,0.1)]">
@@ -31,7 +47,7 @@ export default function RoomSidebar() {
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <SidebarMenuButton variant={"default"} className="py-[25px] pl-4 rounded-none">
-                                    cave
+                                    {roomSlug}
                                     <ChevronDown className="ml-auto mr-2" />
                                 </SidebarMenuButton>
                             </DropdownMenuTrigger>
@@ -52,21 +68,11 @@ export default function RoomSidebar() {
                 </SidebarMenu>
             </SidebarHeader>
 
-
             <SidebarContent className="m-0 p-0">
                 <ScrollArea className="h-full">
                     <div className="px-2">
-                        <ToggleGroup type="single" className="flex flex-col" defaultValue={tags[1]}>
-                            {tags.map((tag, index) => (
-                                <Channel
-                                    key={index}
-                                    id={tag}
-                                    name={tag}
-                                    onClick={() => {
-                                        console.log(`Selected channel: ${tag}`);
-                                    }}
-                                />
-                            ))}
+                        <ToggleGroup type="single" className="flex flex-col" onValueChange={(value) => { console.log(value) }}>
+                            {memoizedChannels}
                         </ToggleGroup>
                     </div>
                 </ScrollArea>
@@ -83,9 +89,9 @@ export default function RoomSidebar() {
                                         <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
                                         <AvatarFallback>CN</AvatarFallback>
                                     </Avatar>
-                                    <text className="font-semibold text-[0.870rem]">
+                                    <div className="font-semibold text-[0.870rem]">
                                         caveman
-                                    </text>
+                                    </div>
                                 </SidebarMenuButton>
                             </DropdownMenuTrigger>
                         </DropdownMenu>
@@ -109,4 +115,14 @@ export default function RoomSidebar() {
             </SidebarFooter >
         </Sidebar >
     );
-}
+});
+
+const RoomSidebar = memo(function RoomSidebar() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <RoomSidebarContent />
+        </Suspense>
+    );
+});
+
+export default RoomSidebar;

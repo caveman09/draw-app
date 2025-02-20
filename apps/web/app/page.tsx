@@ -2,7 +2,6 @@
 import { Card, CardTitle, CardHeader, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "./components/ui/button";
 import Link from "next/link";
-import { Badge } from "./components/ui/badge";
 
 export default function Page() {
   return (

@@ -36,30 +36,35 @@ export default function ChatPage() {
                 setChats(chatData);
             }
         };
-        getChats();
+        //getChats();
 
         const chatNewMessage = (message: ChatMessageSchema) => {
             setChats((prevChats) => [...prevChats, message]);
             console.log(message);
         };
         addMessageCallback(chatNewMessage);
-        console.log('added message callback');
+        //console.log('added message callback');
 
         return () => {
             removeMessageCallback(chatNewMessage);
-            console.log('removed message callback');
+            //console.log('removed message callback');
         };
     }, [slug])
 
     return (
-        <div className="h-full bg-[#303035] rounded-none p-4 flex flex-col">
+        <div className="h-full bg-[#303035] rounded-none flex flex-col">
             <div className="flex-grow overflow-y-auto">
                 {chats.map((chat, index) => (
                     <ChatMessage key={index} message={chat.message} />
                 ))}
             </div>
-            <div className="flex gap-2 mt-4">
-                <Input ref={inputRef} className="flex-grow" placeholder="Message" />
+            <div className="flex gap-2 p-4">
+                <Input
+                    ref={inputRef}
+                    className="flex-grow bg-zinc-700"
+                    placeholder="Message"
+                    type="text"
+                />
                 <Button onClick={() => {
                     if (inputRef.current?.value) {
                         sendChatMessage(inputRef.current.value, roomId.current);
